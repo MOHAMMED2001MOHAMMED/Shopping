@@ -1,0 +1,142 @@
+<%- include('./part/heder'); %>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="navbar-brand" href="/">Home</a>
+                        </li>
+                        <% if(isUser) {%>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/Cart">Cart </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Cart/Order">Order</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/profile">Profile</a>
+                            </li>
+                            <% } else {%>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/login">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./Suinup">Sign Up</a>
+                                </li>
+                                <% } %>
+
+                                    <% if(isAdmin){ %>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/Admin/Add-prodect">Add Prodect</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/Cart/MangeOrder">Mange Order</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/User">Users</a>
+                                        </li>
+                                        <% } %>
+                    </ul>
+
+
+                    <% if(isUser){ %>
+                        <form action="/logout" method="post" style="margin-left: 1%;">
+                            <input type="submit" value="Logout" class="btn btn-danger">
+                        </form>
+                        <% } %>
+                </div>
+            </div>
+        </nav>
+
+
+
+
+
+
+        <% if(result.length == 0 ){ %>
+            <div class="alert alert-danger" role="alert">
+                There Is No Iteam
+            </div>
+            <% }else{ %>
+
+                <% for(let t = 0 ; t<result.length ; t++){ %>
+                    <table style="width:100%" class="container">
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>Name User </th>
+                            <th>Email</th>
+                            <th>Age</th>
+                            <th>Addres</th>
+                            <th>Unfirsty</th>
+                            <th>Phone</th>
+                            <th>Admin</th>
+                            <th>Option</th>
+                        </tr>
+                        <hr>
+                        <tr>
+                            <td style="margin-left: 100px;">
+                                <%= t+1 %>- </td>
+                            <td></td>
+                            <td style="margin-left: 20px;">
+                                <%= result[t].username %>
+                            </td>
+                            <td>
+                                <%= result[t].email %>
+                            </td>
+                            <td>
+                                <%= result[t].Age %>
+                            </td>
+                            <td>
+                                <%= result[t].Addres %>
+                            </td>
+                            <td>
+                                <%= result[t].Unfirsty %>
+                            </td>
+                            <td>
+                                <%= result[t].Phone %>
+                            </td>
+                            <td>
+                                <%= result[t].isAdmin %>
+                            </td>
+                            <td>
+                                <form method="post">
+
+                                    <select name="Admin" id="">
+               <option value="true">true</option>
+               <option value="false">false</option>
+             </select>
+                                    <input type="submit" value="Save" class="btn btn-primary" formaction="/User/Save/<%= result[t]._id %> ">
+
+                                    <input type="submit" value="Delete" class="btn btn-danger" formaction="/User/Delete/<%= result[t]._id %> ">
+
+                                </form>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                    <br> <br>
+                    <% } %>
+                        <% } %>
+
+
+                            <form action="/User/DeleteAll" method="post">
+                                <input type="submit" value="Delete All" class="btn btn-danger" style="margin-top: 200px; margin-left: 1360px;">
+                            </form>
+
+
+
+
+    </body>
+
+    </html>

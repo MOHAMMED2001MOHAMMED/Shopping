@@ -1,0 +1,99 @@
+<%- include('./part/heder'); %>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="navbar-brand" href="/">Home</a>
+                        </li>
+                        <% if(isUser) {%>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/Cart">Cart </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Cart/Order">Order</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/profile">Profile</a>
+                            </li>
+                            <% } else {%>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/login">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./Suinup">Sign Up</a>
+                                </li>
+                                <% } %>
+
+                                    <% if(isAdmin){ %>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/Admin/Add-prodect">Add Prodect</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/Cart/MangeOrder">Mange Order</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/User">Users</a>
+                                        </li>
+                                        <% } %>
+                    </ul>
+
+
+                    <% if(isUser){ %>
+                        <form action="/logout" method="post" style="margin-left: 1%;">
+                            <input type="submit" value="Logout" class="btn btn-danger">
+                        </form>
+                        <% } %>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Add New Product Start Here -->
+
+        <div class="container mt-5">
+            <form action="/Admin/Add-prodect" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Product Name</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Product Type</label>
+                    <input type="text" class="form-control" id="exampleInputPassword1" name="type">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Product Description</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="Description">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Product Category</label>
+                    <input type="text" class="form-control" id="exampleInputPassword1" name="Category">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Product Prise</label>
+                    <input type="number" class="form-control" id="exampleInputEmail1" name="price">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Product Image</label>
+                    <input type="file" class="form-control" id="exampleInputPassword1" name="imge">
+                </div>
+                <button type="submit" class="btn btn-success mt-3">Add Product</button>
+            </form>
+        </div>
+
+
+
+
+        </div>
+
+
+    </body>
+
+    </html>

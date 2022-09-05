@@ -1,0 +1,124 @@
+<%- include('./part/heder'); %>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="navbar-brand" href="/">Home</a>
+                        </li>
+                        <% if(isUser) {%>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/Cart">Cart </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Cart/Order">Order</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/profile">Profile</a>
+                            </li>
+                            <% } else {%>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/login">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./Suinup">Sign Up</a>
+                                </li>
+                                <% } %>
+
+                                    <% if(isAdmin){ %>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/Admin/Add-prodect">Add Prodect</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/Cart/MangeOrder">Mange Order</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/User">Users</a>
+                                        </li>
+                                        <% } %>
+                    </ul>
+
+
+                    <% if(isUser){ %>
+                        <form action="/logout" method="post" style="margin-left: 1%;">
+                            <input type="submit" value="Logout" class="btn btn-danger">
+                        </form>
+                        <% } %>
+                </div>
+            </div>
+        </nav>
+
+        <% for(let er of validatorError ) {%>
+            <div class="alert alert-danger container" role="alert">
+                <%= er %>
+            </div>
+            <% } %>
+
+                <% if(result.length == 0 ){ %>
+                    <div class="alert alert-danger container mt-3" role="alert">
+                        There Is No Iteam 😕
+                    </div>
+                    <% } else { %>
+
+                        <% for(let t = 0 ; t<result.length ; t++){ %>
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm mt-5 mb-5">
+                                        <div class="card" style="width: 18rem">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    Prodect :
+                                                    <%= result[t].name %>
+                                                </h5>
+                                                Price <span class="badge rounded-pill bg-success">$<%= result[t].Price %></span> Total <span class="badge rounded-pill bg-success">$<%= result[t].AllPrice %></span>
+                                                <p class="card-text">
+                                                    The amount :
+                                                    <%= result[t].amount %>
+                                                </p>
+
+
+                                                <form method="post">
+                                                    <input type="text" name="amount" value="<%=  result[t].amount %>" style="margin-bottom:4px;">
+
+                                                    <input type="hidden" name="CartId" value="<%= result[t]._id%>">
+                                                    <input type="hidden" name="pri" value="<%= result[t].Price %> ">
+                                                    <input type="hidden" name="taimstamp" value="<%= result[t].taimstamp %> ">
+                                                    <input type="hidden" name="AllPrice" value="<%= result[t].AllPrice %> ">
+                                                    <input type="hidden" name="name" value="<%= result[t].name %> ">
+                                                    <input type="hidden" name="ProdectId" value="<%= result[t].ProdectId %> ">
+                                                    <input type="hidden" name="userId" value="<%=result[t].userId %> ">
+
+
+                                                    <input type="submit" value="Sava" class="btn btn-primary" formaction="/Cart/Save/<%= result[t]._id%>">
+                                                    <input type="submit" value="Order" class="btn btn-success" formaction="/Cart/Address">
+                                                    <input type="submit" value="Delete" class="btn btn-danger" formaction="/Cart/Delete/<%= result[t]._id %> ">
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <% } %>
+                                        <% } %>
+
+
+                                            <form action="/Cart/DeleteAll" method="post">
+                                                <input type="submit" value="DeleteAll" class="btn btn-danger" style="margin-top: 200px; margin-left: 1360px;">
+                                            </form>
+
+    </body>
+
+    </html>

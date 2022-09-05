@@ -1,0 +1,159 @@
+<%- include('./part/heder'); %>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="navbar-brand" href="/">Home</a>
+                        </li>
+                        <% if(isUser) {%>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/Cart">Cart </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Cart/Order">Order</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/profile">Profile</a>
+                            </li>
+                            <% } else {%>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/login">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./Suinup">Sign Up</a>
+                                </li>
+                                <% } %>
+
+                                    <% if(isAdmin){ %>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/Admin/Add-prodect">Add Prodect</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/Cart/MangeOrder">Mange Order</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/User">Users</a>
+                                        </li>
+                                        <% } %>
+                    </ul>
+
+                    <% if(isUser){ %>
+                        <form action="/logout" method="post" style="margin-left: 1%;">
+                            <input type="submit" value="Logout" class="btn btn-danger">
+                        </form>
+                        <% } %>
+                </div>
+            </div>
+        </nav>
+
+        <br><br>
+        <form action="/Cart/MangeOrder" method="get" style="margin-left: 50px;">
+            <button name="Status" class="btn btn-danger" value="All">All</button>
+            <button name="Status" class="btn btn-dark " value="Pending">Pending</button>
+            <button name="Status" class="btn btn-success " value="Sent">Sent</button>
+            <button name="Status" class="btn btn-warning " value="Completed">Completed</button>
+        </form>
+
+
+
+        <% if(result.length == 0 ){ %>
+            <div class="alert alert-danger container mt-5" role="alert">
+                There are items
+            </div>
+            <% }else{ %>
+
+                <br>
+                <br>
+                <% for(let t = 0 ; t<result.length ; t++){ %>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm mt-5 mb-5">
+                                <div class="card" style="width: 18rem">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            Prodect :
+                                            <%= result[t].name %>
+                                        </h5>
+                                        Price <span class="badge rounded-pill bg-success">$<%= result[t].Price %></span> Total <span class="badge rounded-pill bg-success">$<%= result[t].AllPrice %> </span>
+                                        <p class="card-text">
+                                            The amount :
+                                            <%= result[t].amount %>
+                                        </p>
+                                        <p class="card-text">
+                                            The Status :
+                                            <%= result[t].Status %>
+                                        </p>
+                                        <p class="card-text">
+                                            Address :
+                                            <%= result[t].Addres %>
+                                        </p>
+                                        <p class="card-text">
+                                            Addres All :
+                                            <%= result[t].AddresAll %>
+                                        </p>
+                                        <p class="card-text">
+                                            City :
+                                            <%= result[t].City %>
+                                        </p>
+                                        <p class="card-text">
+                                            Mobaile :
+                                            <%= result[t].Mobaile %>
+                                        </p>
+                                        <p class="card-text">
+                                            Street_and_neighborhood
+                                            <%= result[t].Street_and_neighborhood %>
+                                        </p>
+
+
+                                    </div>
+
+                                    <form method="post">
+
+                                        <select name="stauts" id="" style="margin-left:18px;">
+               <option value="Pending">Pending</option>
+               <option value="Sent">Sent</option>
+               <option value="Completed">Completed</option>
+             </select>
+                                        <input type="submit" value="Save" class="btn btn-primary" formaction="/Cart/MangeOrder/Save/<%= result[t]._id %> " style="margin-left:5px;">
+                                        <br>
+                                        <input type="submit" value="Cancellation" class="btn btn-danger" formaction="/Cart/Order/Delte/<%= result[t]._id %> " style="margin-left:18px;">
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    </td>
+                    </tr>
+
+                    </table>
+
+                    <br> <br>
+                    <% } %>
+                        <% } %>
+
+
+
+
+
+                            <form action="/Cart/Order/DeleteAll" method="post">
+                                <input type="submit" value="Cancellation All" class="btn btn-danger" style="margin-top: 200px; margin-left: 1360px;">
+                            </form>
+
+    </body>
+
+    </html>
